@@ -1,0 +1,80 @@
+<div class="form-container">
+  <div class="form-card">
+    <h2>{{ isEditMode ? 'Edit Task' : 'Create New Task' }}</h2>
+    
+    <form (ngSubmit)="onSubmit()" #taskForm="ngForm">
+      <div class="form-group">
+        <label for="name">Task Name *:</label>
+        <input 
+          type="text" 
+          id="name" 
+          [(ngModel)]="task.name" 
+          name="name" 
+          required
+          maxlength="100"
+          class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description *:</label>
+        <textarea 
+          id="description" 
+          [(ngModel)]="task.description" 
+          name="description" 
+          required
+          maxlength="500"
+          rows="4"
+          class="form-control"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dueDate">Due Date *:</label>
+          <input 
+            type="datetime-local" 
+            id="dueDate" 
+            [(ngModel)]="task.dueDate" 
+            name="dueDate" 
+            required
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="priority">Priority:</label>
+          <select 
+            id="priority" 
+            [(ngModel)]="task.priority" 
+            name="priority" 
+            class="form-control">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="isEditMode">
+        <label for="status">Status:</label>
+        <select 
+          id="status" 
+          [(ngModel)]="task.status" 
+          name="status" 
+          class="form-control">
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
+      <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="success" *ngIf="successMessage">{{ successMessage }}</div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn-primary" [disabled]="!taskForm.valid">
+          {{ isEditMode ? 'Update Task' : 'Create Task' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

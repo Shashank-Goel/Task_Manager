@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.angular",
+    "\\.angular\\cache",
+    "\\.angular\\cache\\20.3.6",
+    "\\.angular\\cache\\20.3.6\\task-manager",
+    "\\.angular\\cache\\20.3.6\\task-manager\\vite",
+    "\\.angular\\cache\\20.3.6\\task-manager\\vite\\deps",
+    "\\src"
+  ],
+  "SelectedNode": "\\.angular\\cache\\20.3.6\\task-manager\\vite\\deps_ssr",
+  "PreviewInSolutionExplorer": false
+}

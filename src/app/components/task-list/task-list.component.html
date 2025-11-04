@@ -1,0 +1,77 @@
+<div class="task-container">
+  <div class="task-header">
+    <h2>My Tasks</h2>
+    <button class="btn-primary" routerLink="/task-form">Add New Task</button>
+  </div>
+
+  <div class="filters-section">
+    <div class="filters">
+      <input 
+        type="text" 
+        placeholder="Search tasks..." 
+        [(ngModel)]="searchTerm" 
+        (input)="applyFilters()"
+        class="search-input">
+      
+      <select [(ngModel)]="filterStatus" (change)="applyFilters()" class="filter-select">
+        <option value="">All Status</option>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+      
+      <select [(ngModel)]="filterPriority" (change)="applyFilters()" class="filter-select">
+        <option value="">All Priority</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+    </div>
+
+    <div class="sort-controls">
+      <select [(ngModel)]="sortBy" (change)="applyFilters()" class="sort-select">
+        <option value="createdAt">Created Date</option>
+        <option value="dueDate">Due Date</option>
+        <option value="priority">Priority</option>
+        <option value="name">Name</option>
+      </select>
+      
+      <select [(ngModel)]="sortOrder" (change)="applyFilters()" class="sort-select">
+        <option value="desc">Descending</option>
+        <option value="asc">Ascending</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="tasks-grid" *ngIf="paginatedTasks.length > 0">
+    <div class="task-card" *ngFor="let task of paginatedTasks">
+      <div class="task-content">
+        <h3>{{ task.name }}</h3>
+        <p>{{ task.description }}</p>
+        <div class="task-meta">
+          <span class="due-date">Due: {{ task.dueDate | date:'short' }}</span>
+          <span class="priority" [class]="getPriorityClass(task.priority)">{{ task.priority }}</span>
+          <span class="status" [class]="getStatusClass(task.status)">{{ task.status }}</span>
+        </div>
+      </div>
+      <div class="task-actions">
+        <button class="btn-edit" (click)="editTask(task.id)">Edit</button>
+        <button class="btn-delete" (click)="deleteTask(task.id)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button 
+      *ngFor="let page of [].constructor(totalPages); let i = index" 
+      [class.active]="currentPage === i + 1"
+      (click)="changePage(i + 1)"
+      class="page-btn">
+      {{ i + 1 }}
+    </button>
+  </div>
+
+  <div class="no-tasks" *ngIf="filteredTasks.length === 0">
+    <p>No tasks found. <a routerLink="/task-form">Create your first task!</a></p>
+  </div>
+</div>
