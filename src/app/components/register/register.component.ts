@@ -1,3 +1,5 @@
+
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,14 +21,28 @@ export class RegisterComponent {
   errorMessage = '';
   successMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
+
+  // simple email validation function using regex
+  private isValidEmail(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  }
 
   onSubmit(): void {
+    // check all fields filled
     if (!this.email || !this.password || !this.firstName || !this.lastName) {
       this.errorMessage = 'Please fill all fields';
       return;
     }
 
+    // check valid email
+    if (!this.isValidEmail(this.email)) {
+      this.errorMessage = 'Please enter a valid email address';
+      return;
+    }
+
+    // register user
     if (this.authService.register({
       email: this.email,
       password: this.password,
@@ -34,6 +50,7 @@ export class RegisterComponent {
       lastName: this.lastName,
       role: 'user'
     })) {
+      this.errorMessage = '';
       this.successMessage = 'Registration successful! Redirecting to login...';
       setTimeout(() => {
         this.router.navigate(['/login']);
@@ -43,3 +60,4 @@ export class RegisterComponent {
     }
   }
 }
+
