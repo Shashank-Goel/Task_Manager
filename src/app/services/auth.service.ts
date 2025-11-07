@@ -77,8 +77,8 @@ export class AuthService {
     if (!users) {
       const defaultUsers: User[] = [{
         id: 'admin-1',
-        email: 'admin@taskmanager.com',
-        password: 'admin123',
+        email: 'admin@test.com',
+        password: 'admin@123',
         firstName: 'Admin',
         lastName: 'User',
         role: 'admin',
